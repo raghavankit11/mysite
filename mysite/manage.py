@@ -3,7 +3,7 @@
 import os
 import sys
 
-
+#comments added by GIT
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
     try:
