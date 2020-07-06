@@ -1,23 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-{% load static %}
-
-<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
-{% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
+{% extends "polls/basic.html" %}
+{% block content %}
 
 
-</body>
-</html>
+    <div class = "list-question">
+    {% if latest_question_list %}
+        <ul>
+        {% for question in latest_question_list %}
+            <li>
+                <a class="list-group-item list-group-item-action" href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
+                {% if question.questioner == user %}
+                <a href="{% url 'polls:question-edit' question.id %}">Edit</a>
+                <a  href="{% url 'polls:question-delete' question.id %}">Delete</a>
+                {% endif %}
+
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No polls are available.</p>
+    {% endif %}
+    </div>
+
+{% endblock content %}
+
+{##}
+{#{% load static %}#}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">#}
+{#    <title>Polls-App</title>#}
+{##}
+{#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">#}
+{#    <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">#}
+{#    <!-- jQuery first, then Popper.js, then Bootstrap JS -->#}
+{#    <script src="https://code.jquery.com/jquery-3.5.0.min.js" ></script>#}
+{#    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>#}
+{#    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>#}
+{##}
+{#</head>#}
+{#<body>#}
+{#    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">#}
+{##}
+{#      <ul class="navbar-nav ">#}
+{#        <li class="nav-item">#}
+{#          <a class="nav-link" href="{% url 'polls:register' %}">Register</a>#}
+{#        </li>#}
+{#        <li class="nav-item">#}
+{#          <a class="nav-link" href="{% url 'polls:login' %}">LogIn</a>#}
+{#        </li>#}
+{#        <li class="nav-item">#}
+{#          <a class="nav-link" href="{% url 'polls:logout' %}">LogOut</a>#}
+{#        </li>#}
+{#      </ul>#}
+{##}
+{#    </nav>#}
+{#        <div class = "list-question">#}
+{#    {% if latest_question_list %}#}
+{#        <ul>#}
+{#        {% for question in latest_question_list %}#}
+{#            <li><a class="list-group-item list-group-item-action" href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>#}
+{#        {% endfor %}#}
+{#        </ul>#}
+{#    {% else %}#}
+{#        <p>No polls are available.</p>#}
+{#    {% endif %}#}
+{#    </div>#}
+{##}
+{##}
+{#</body>#}
+{#</html>#}

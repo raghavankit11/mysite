@@ -1,0 +1,32 @@
+<script src="https://raw.githubusercontent.com/elo80ka/django-dynamic-formset/master/src/jquery.formset.js"></script>
+
+{% extends "polls/basic.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Polls Question</legend>
+                {{ q_form|crispy }}
+                {{ c_forms.management_form }}
+                {% for c in c_forms %}
+                <div class="link-formset">
+                  {{ c|crispy }}
+                </div>
+                {% endfor %}
+
+            </fieldset>
+        <script type="text/javascript">
+            $('.link-formset').formset({
+                addText: 'Add Choice',
+                deleteText: 'Remove Choice'
+            });
+        </script>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Post</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock content %}
