@@ -4,18 +4,42 @@
 
     <div class = "list-question">
     {% if latest_question_list %}
-        <ul>
-        {% for question in latest_question_list %}
-            <li>
-                <a class="list-group-item list-group-item-action" href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Poll ID</th>
+              <th scope="col">Poll Question</th>
+              <th scope="col">Published On</th>
+              <th scope="col">Vote</th>
+              <th scope="col">Results</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for question in latest_question_list %}
+            <tr>
+              <th scope="row">{{ question.id }}</th>
+              <td>{{ question.question_text }}</td>
+              <td>{{ question.pub_date }}</td>
+              <td><a class="" href="{% url 'polls:detail' question.id %}">Vote</a></td>
+              <td>
+                  {% for choice in question.choices.all %}
+                    {{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }} <br>
+                  {% endfor %}
+              </td>
+              <td>
                 {% if question.questioner == user %}
-                <a href="{% url 'polls:question-edit' question.id %}">Edit</a>
-                <a  href="{% url 'polls:question-delete' question.id %}">Delete</a>
+                  <a href="{% url 'polls:question-edit' question.id %}" >Edit</a>
+                  <a  href="{% url 'polls:question-delete' question.id %}">Delete</a>
+                {% else %}
+                  <a title="Only poll owner can perform this action" class="text-grey">Edit</a>
+                  <a title="Only poll owner can perform this action" class="text-grey">Delete</a>
                 {% endif %}
-
-            </li>
-        {% endfor %}
-        </ul>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
     {% else %}
         <p>No polls are available.</p>
     {% endif %}

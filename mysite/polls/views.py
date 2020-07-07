@@ -123,18 +123,21 @@ def create_question_and_choices(request, pk=None):
 
         if request.method == 'POST':
             q_form = QuestionForm(data=request.POST, instance=q_obj)
-            c_forms = ChoiceFormSet(request.POST, instance=q_obj)
+            if pk:
+                c_forms = ChoiceFormSet(request.POST, instance=q_obj)
+            else:
+                c_forms = ChoiceFormSet(request.POST)
 
             if q_form.is_valid() and c_forms.is_valid():
                 q_obj = q_form.save(commit=False)
                 q_obj.questioner = request.user
                 q_obj.save()
 
-                # c_objs = c_forms.save(commit=False)
-                for c_form in c_forms:
-                    c_obj = c_form.save(commit=False)
-                    c_obj.question = q_obj
-                    c_obj.save()
+                if not pk:
+                    c_forms.instance = q_obj
+
+                c_forms.save()
+
                 return redirect('polls:polls-home')
         else:
             q_form = QuestionForm(instance=q_obj)

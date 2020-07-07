@@ -1,10 +1,9 @@
 {% extends "polls/basic.html" %}
 {% block content %}
-    <h2>You have been logged out</h2>
-
-        <div class="border-top pt-100">
-            <small  class="text-muted">
-                 <a href="{% url 'polls:login' %}">Log In Again</a>
-            </small>
+    <div style="margin:70px">
+        You have been logged out.
+        <div>
+            <a href="{% url 'polls:login' %}">Log In Again</a>
         </div>
+    </div>
 {% endblock content %}

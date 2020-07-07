@@ -44,8 +44,17 @@ h2{
 
 }
 
-.span-welcome{
-    color: white;
-    margin-top: 10px;
-    margin-right: 10px;
+.text-grey{
+    color:lightgrey !important;
+}
+.text-white{
+    color:white;
+}
+
+.border-red{
+    border:solid 1px red;
+}
+
+.margin-left-50{
+    margin-left: 50px;
 }
